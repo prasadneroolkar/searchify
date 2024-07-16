@@ -1,14 +1,18 @@
-import React from "react";
-import { useState } from "react";
+import { useRef } from "react";
+
 import { useNavigate } from "react-router-dom";
 
 const SearchMain = () => {
-  const [query, setQuery] = useState("");
+  const queryRef = useRef();
+
   const navigate = useNavigate();
   const storeValue = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
-      navigate(`/result-page?query=${query}`);
+      const query = queryRef.current.value;
+      if (query.trim()) {
+        navigate(`/result-page?query=${query}`);
+      }
     }
   };
   return (
@@ -18,9 +22,8 @@ const SearchMain = () => {
         <div className="search_box">
           <input
             type="text"
+            ref={queryRef}
             placeholder="search"
-            value={query}
-            onChange={(e) => setQuery(e.target.value)}
             onKeyPress={storeValue}
           />
         </div>
