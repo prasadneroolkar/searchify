@@ -22,3 +22,34 @@ img {
   width: 90px;
   height: auto;
 }
+
+.tab {
+  width: 50%;
+  margin: 0 auto;
+}
+
+ul.tabName {
+  display: flex;
+  list-style-type: none;
+}
+
+ul.tabName li {
+  width: 15%;
+  padding: 10px;
+  background-color: #f6f4f4;
+  border-right: 1px solid white;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+ul.tab_content {
+  background-color: #ddd;
+  list-style: none;
+  padding: 10px;
+}
+
+ul.tab_content li {
+  display: flex;
+  justify-content: left;
+  column-gap: 10px;
+}

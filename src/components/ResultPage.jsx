@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 const ResultPage = () => {
+  const [tab, setTab] = useState("github");
   const location = useLocation();
   const retriveUrl = () => {
     return new URLSearchParams(location.search);
@@ -20,7 +21,7 @@ const ResultPage = () => {
 
     try {
       const response = await fetch(
-        `https://api.github.com/search/topics?q=${resSearch}&per_page=${maxResults}`,
+        `https://api.github.com/search/repositories?q=${resSearch}&per_page=${maxResults}`,
         {
           headers: {
             Authorization: `token ${token}`,
@@ -47,6 +48,10 @@ const ResultPage = () => {
     }
   }, [resSearch]);
 
+  const handleTab = (selectedTab) => {
+    setTab(selectedTab);
+  };
+
   return (
     <>
       <div className="container">
@@ -57,24 +62,90 @@ const ResultPage = () => {
             onChange={(e) => setResearch(e.target.value)}
           />
         </div>
-        <div>
+        <div className="tab">
+          <ul className="tabName">
+            <li onClick={() => handleTab("github")}>github</li>
+            <li onClick={() => handleTab("youtube")}>youtube</li>
+            <li onClick={() => handleTab("google")}>google</li>
+          </ul>
           {error && <p>Error: {error}</p>}
-          {gitApi.length > 0 &&
-            gitApi.map((elem, id) => (
-              <div key={id}>
-                <p>
-                  <a
-                    href={`https://github.com/topics/${elem.name}`}
-                    target="_blank"
-                  >
-                    {elem.name}
-                  </a>
-                </p>
-                <p>{elem.short_description}</p>
-
-                {/* <p>{elem.short_description}</p> */}
-              </div>
-            ))}
+          {gitApi.length > 0 && (
+            <div className="content">
+              {tab === "github" && (
+                <>
+                  {gitApi.map((elem, id) => {
+                    return (
+                      <ul className="tab_content one" key={id}>
+                        <li>
+                          <img
+                            className="profileImg"
+                            style={{ width: "20px", height: "20px" }}
+                            src={`https://github.com/${elem.name}.png?size=40`}
+                            alt=""
+                          />
+                          <a
+                            href={`https://github.com/${elem.name}`}
+                            target="_blank"
+                          >
+                            {elem.name}
+                          </a>
+                        </li>
+                        <li>{elem.short_description}</li>
+                      </ul>
+                    );
+                  })}
+                </>
+              )}
+              {tab === "youtube" && (
+                <>
+                  {gitApi.map((elem, id) => {
+                    return (
+                      <ul className="tab_content two" key={id}>
+                        <li>
+                          <img
+                            className="profileImg"
+                            style={{ width: "20px", height: "20px" }}
+                            src={`https://github.com/${elem.name}.png?size=40`}
+                            alt=""
+                          />
+                          <a
+                            href={`https://github.com/${elem.name}`}
+                            target="_blank"
+                          >
+                            {elem.name}
+                          </a>
+                        </li>
+                        <li>{elem.short_description}</li>
+                      </ul>
+                    );
+                  })}
+                </>
+              )}
+              {tab === "google" && (
+                <>
+                  {gitApi.map((elem, id) => (
+                    <ul className="tab_content three" key={id}>
+                      <li>
+                        <img
+                          className="profileImg"
+                          style={{ width: "20px", height: "20px" }}
+                          src={`https://github.com/${elem.name}.png?size=40`}
+                          alt=""
+                        />
+                        <a
+                          href={`https://github.com/${elem.name}`}
+                          target="_blank"
+                        >
+                          {elem.name}
+                        </a>
+                      </li>
+                      <li>{elem.short_description}</li>
+                    </ul>
+                  ))}
+                </>
+              )}
+            </div>
+          )}
         </div>
       </div>
     </>
