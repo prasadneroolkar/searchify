@@ -16,8 +16,7 @@ const ResultPage = () => {
   const maxResults = 10; // Set your desired maximum number of results here
 
   const gitApiFunc = async () => {
-    const token = process.env.REACT_APP_GITHUB_TOKEN;
-    console.log("GitHub Token:", token);
+    const token = import.meta.env.VITE_GITHUB_TOKEN;
 
     try {
       const response = await fetch(
