@@ -16,14 +16,15 @@ const ResultPage = () => {
   const maxResults = 10; // Set your desired maximum number of results here
 
   const gitApiFunc = async () => {
-    const api = {};
+    const token = process.env.REACT_APP_GITHUB_TOKEN;
+    console.log("GitHub Token:", token);
 
     try {
       const response = await fetch(
         `https://api.github.com/search/topics?q=${resSearch}&per_page=${maxResults}`,
         {
           headers: {
-            Authorization: `token ${api.token}`,
+            Authorization: `token ${token}`,
             Accept: "application/vnd.github.mercy-preview+json", // Required for topics API
           },
         }
