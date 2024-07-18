@@ -1,6 +1,6 @@
 const TabContent = ({ mapGit }) => {
   return (
-    <div>
+    <>
       {mapGit.map((elem, id) => {
         return (
           <ul className="tab_content one" key={id}>
@@ -12,14 +12,16 @@ const TabContent = ({ mapGit }) => {
                 alt={elem.name}
               />
               <a href={elem.html_url} target="_blank">
-                {elem.full_name}
+                <h2>{elem.full_name}</h2>
               </a>
             </li>
-            <li>{elem.description}</li>
+            <li>
+              <p>{elem.description}</p>
+            </li>
           </ul>
         );
       })}
-    </div>
+    </>
   );
 };
 

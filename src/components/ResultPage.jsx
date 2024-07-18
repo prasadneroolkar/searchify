@@ -24,6 +24,58 @@ const ResultPage = () => {
 
     try {
       const response = await fetch(
+        `https://api.github.com/search/repositories?q=${resSearch}`,
+        {
+          headers: {
+            Authorization: `token ${token}`,
+            Accept: "application/vnd.github.mercy-preview+json", // Required for topics API
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log(data);
+      setGitapi(data.items);
+    } catch (error) {
+      console.error("Error fetching data", error);
+      setError(error.message);
+    }
+  };
+
+  const youApiFunc = async () => {
+    const token = import.meta.env.VITE_GITHUB_TOKEN;
+
+    try {
+      const response = await fetch(
+        `https://api.github.com/search/repositories?q=${resSearch}&per_page=${maxResults}`,
+        {
+          headers: {
+            Authorization: `token ${token}`,
+            Accept: "application/vnd.github.mercy-preview+json", // Required for topics API
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      const data = await response.json();
+      console.log(data);
+      setGitapi(data.items);
+    } catch (error) {
+      console.error("Error fetching data", error);
+      setError(error.message);
+    }
+  };
+
+  const gogApiFunc = async () => {
+    const token = import.meta.env.VITE_GITHUB_TOKEN;
+
+    try {
+      const response = await fetch(
         `https://api.github.com/search/repositories?q=${resSearch}&per_page=${maxResults}`,
         {
           headers: {
@@ -81,7 +133,7 @@ const ResultPage = () => {
           />
         </div>
         <div className="tab">
-          <Tabs onhandletab={handleTab} />
+          <Tabs onhandletab={handleTab} tab={tab} />
           {error && <p>Error: {error}</p>}
           {gitApi.length > 0 && (
             <div className="content">

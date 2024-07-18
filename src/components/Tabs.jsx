@@ -1,10 +1,25 @@
-const Tabs = ({ onhandletab }) => {
+const Tabs = ({ onhandletab, tab }) => {
   return (
     <>
       <ul className="tabName">
-        <li onClick={() => onhandletab("github")}>github</li>
-        <li onClick={() => onhandletab("youtube")}>youtube</li>
-        <li onClick={() => onhandletab("google")}>google</li>
+        <li
+          className={tab === "github" && "active"}
+          onClick={() => onhandletab("github")}
+        >
+          <p>Github</p>
+        </li>
+        <li
+          className={tab === "youtube" && "active"}
+          onClick={() => onhandletab("youtube")}
+        >
+          <p>Youtube</p>
+        </li>
+        <li
+          className={tab === "google" && "active"}
+          onClick={() => onhandletab("google")}
+        >
+          <p>Google</p>
+        </li>
       </ul>
     </>
   );

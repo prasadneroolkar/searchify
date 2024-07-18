@@ -18,7 +18,6 @@ const SearchMain = () => {
   return (
     <>
       <div className="container">
-        <h1>Searchify</h1>
         <div className="search_box">
           <InputComp refProp={queryRef} handleStore={storeValue} />
         </div>
