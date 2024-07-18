@@ -1,20 +1,21 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
+import InputComp from "./InputComp";
 
 const ResultPage = () => {
   const [tab, setTab] = useState("github");
   const location = useLocation();
-  const retriveUrl = () => {
-    return new URLSearchParams(location.search);
-  };
+  // const retriveUrl = () => {
+  //   return new URLSearchParams(location.state?.query);
+  // };
 
-  const queries = retriveUrl();
+  // const queries = retriveUrl();
 
-  const searchQuery = queries.get("query");
-  const [resSearch, setResearch] = useState(searchQuery || "");
+  // const searchQuery = queries.get("query");
+  const [resSearch, setResearch] = useState(location.state?.query || ""); // Get query from state
   const [gitApi, setGitapi] = useState([]);
   const [error, setError] = useState(null);
-  const maxResults = 10; // Set your desired maximum number of results here
+  const maxResults = 10;
 
   const gitApiFunc = async () => {
     const token = import.meta.env.VITE_GITHUB_TOKEN;
@@ -52,14 +53,34 @@ const ResultPage = () => {
     setTab(selectedTab);
   };
 
+  const handleInputChange = (e) => {
+    setResearch(e.target.value);
+  };
+
+  const handleSearch = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      const query = e.target.value.trim();
+      if (query) {
+        setResearch(query); // Update search query
+      }
+    }
+  };
+
   return (
     <>
       <div className="container">
         <div className="search_result">
-          <input
+          {/* <input
             type="text"
             value={resSearch}
             onChange={(e) => setResearch(e.target.value)}
+          /> */}
+          <InputComp
+            handleStore={handleSearch}
+            refProp={null}
+            value={resSearch}
+            onChange={handleInputChange}
           />
         </div>
         <div className="tab">

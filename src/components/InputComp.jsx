@@ -1,11 +1,13 @@
-const InputComp = () => {
+const InputComp = ({ handleStore, refProp, value, onChange }) => {
   return (
     <div className="search_box">
       <input
+        ref={refProp}
+        value={value}
         type="text"
-        ref={queryRef}
         placeholder="search"
-        onKeyPress={storeValue}
+        onKeyPress={handleStore}
+        onChange={onChange}
       />
     </div>
   );
