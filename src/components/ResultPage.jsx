@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import InputComp from "./InputComp";
+import Tabs from "./Tabs";
+import TabContent from "./TabContent";
 
 const ResultPage = () => {
   const [tab, setTab] = useState("github");
@@ -71,11 +73,6 @@ const ResultPage = () => {
     <>
       <div className="container">
         <div className="search_result">
-          {/* <input
-            type="text"
-            value={resSearch}
-            onChange={(e) => setResearch(e.target.value)}
-          /> */}
           <InputComp
             handleStore={handleSearch}
             refProp={null}
@@ -84,87 +81,13 @@ const ResultPage = () => {
           />
         </div>
         <div className="tab">
-          <ul className="tabName">
-            <li onClick={() => handleTab("github")}>github</li>
-            <li onClick={() => handleTab("youtube")}>youtube</li>
-            <li onClick={() => handleTab("google")}>google</li>
-          </ul>
+          <Tabs onhandletab={handleTab} />
           {error && <p>Error: {error}</p>}
           {gitApi.length > 0 && (
             <div className="content">
-              {tab === "github" && (
-                <>
-                  {gitApi.map((elem, id) => {
-                    return (
-                      <ul className="tab_content one" key={id}>
-                        <li>
-                          <img
-                            className="profileImg"
-                            style={{ width: "20px", height: "20px" }}
-                            src={`https://github.com/${elem.name}.png?size=40`}
-                            alt=""
-                          />
-                          <a
-                            href={`https://github.com/${elem.name}`}
-                            target="_blank"
-                          >
-                            {elem.name}
-                          </a>
-                        </li>
-                        <li>{elem.short_description}</li>
-                      </ul>
-                    );
-                  })}
-                </>
-              )}
-              {tab === "youtube" && (
-                <>
-                  {gitApi.map((elem, id) => {
-                    return (
-                      <ul className="tab_content two" key={id}>
-                        <li>
-                          <img
-                            className="profileImg"
-                            style={{ width: "20px", height: "20px" }}
-                            src={`https://github.com/${elem.name}.png?size=40`}
-                            alt=""
-                          />
-                          <a
-                            href={`https://github.com/${elem.name}`}
-                            target="_blank"
-                          >
-                            {elem.name}
-                          </a>
-                        </li>
-                        <li>{elem.short_description}</li>
-                      </ul>
-                    );
-                  })}
-                </>
-              )}
-              {tab === "google" && (
-                <>
-                  {gitApi.map((elem, id) => (
-                    <ul className="tab_content three" key={id}>
-                      <li>
-                        <img
-                          className="profileImg"
-                          style={{ width: "20px", height: "20px" }}
-                          src={`https://github.com/${elem.name}.png?size=40`}
-                          alt=""
-                        />
-                        <a
-                          href={`https://github.com/${elem.name}`}
-                          target="_blank"
-                        >
-                          {elem.name}
-                        </a>
-                      </li>
-                      <li>{elem.short_description}</li>
-                    </ul>
-                  ))}
-                </>
-              )}
+              {tab === "github" && <>{<TabContent mapGit={gitApi} />}</>}
+              {tab === "youtube" && <>{<TabContent mapGit={gitApi} />}</>}
+              {tab === "google" && <>{<TabContent mapGit={gitApi} />}</>}
             </div>
           )}
         </div>
