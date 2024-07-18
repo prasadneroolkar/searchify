@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import InputComp from "./InputComp";
 import Tabs from "./Tabs";
 import TabContent from "./TabContent";
+import Loader from "./Loader";
 
 const ResultPage = () => {
   const [tab, setTab] = useState("github");
@@ -17,12 +18,14 @@ const ResultPage = () => {
   const [resSearch, setResearch] = useState(location.state?.query || ""); // Get query from state
   const [gitApi, setGitapi] = useState([]);
   const [error, setError] = useState(null);
+  const [loader, setLoader] = useState(false);
   const maxResults = 10;
 
   const gitApiFunc = async () => {
     const token = import.meta.env.VITE_GITHUB_TOKEN;
 
     try {
+      setLoader(true);
       const response = await fetch(
         `https://api.github.com/search/repositories?q=${resSearch}`,
         {
@@ -42,6 +45,8 @@ const ResultPage = () => {
     } catch (error) {
       console.error("Error fetching data", error);
       setError(error.message);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -101,7 +106,7 @@ const ResultPage = () => {
     if (resSearch) {
       gitApiFunc();
     }
-  }, [resSearch]);
+  }, [resSearch, tab]);
 
   const handleTab = (selectedTab) => {
     setTab(selectedTab);
@@ -121,6 +126,8 @@ const ResultPage = () => {
     }
   };
 
+  const totalitems = gitApi.length;
+
   return (
     <>
       <div className="container">
@@ -133,11 +140,15 @@ const ResultPage = () => {
           />
         </div>
         <div className="tab">
-          <Tabs onhandletab={handleTab} tab={tab} />
+          <Tabs onhandletab={handleTab} tab={tab} noRes={totalitems} />
           {error && <p>Error: {error}</p>}
           {gitApi.length > 0 && (
             <div className="content">
-              {tab === "github" && <>{<TabContent mapGit={gitApi} />}</>}
+              {loader ? (
+                <Loader />
+              ) : (
+                tab === "github" && <>{<TabContent mapGit={gitApi} />}</>
+              )}
               {tab === "youtube" && <>{<TabContent mapGit={gitApi} />}</>}
               {tab === "google" && <>{<TabContent mapGit={gitApi} />}</>}
             </div>

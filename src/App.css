@@ -64,7 +64,7 @@ input:focus-visible {
   outline: none;
 }
 
-img {
+.icons img {
   width: 90px;
   height: auto;
 }
@@ -80,18 +80,25 @@ ul.tabName {
 }
 
 ul.tabName li {
-  width: 20%;
   padding: 10px;
   background-color: #f0f0f0;
-  /* border-right: 1px solid #cccccc; */
+
   cursor: pointer;
-  /* transition: 0.2s; */
 }
 
 ul.tabName li.active {
   background-color: #ffffff;
   outline: 1px solid #cccccc;
   border-right: 1px solid #cccccc;
+}
+
+ul.tabName li p span {
+  background-color: #37ab37;
+  color: #fff;
+  border-radius: 8px;
+  padding: 1px 5px;
+  margin: 0 5px;
+  font-size: 13px;
 }
 
 ul.tab_content {
@@ -108,6 +115,16 @@ ul.tab_content li {
   display: flex;
   justify-content: left;
   column-gap: 10px;
+}
+
+ul.tabName li p {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+ul.tabName li p img {
+  margin-right: 5px;
 }
 
 ul.tab_content li:first-child {
