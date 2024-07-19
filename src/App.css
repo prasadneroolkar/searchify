@@ -136,3 +136,11 @@ ul.tab_content li:first-child {
   overflow-y: scroll;
   max-height: 400px;
 }
+
+ul.tab_content.two li p a {
+  display: inline-block;
+  margin-bottom: 10px;
+}
+.content a {
+  text-decoration: none;
+}

@@ -24,9 +24,16 @@ const TabContent = ({ mapGit, tab }) => {
               </li>
             </ul>
           );
-        } else {
+        } else if (tab === "youtube") {
+          const { id: youtubeId } = elem;
+          const videoUrl =
+            youtubeId.kind === "youtube#video"
+              ? `https://www.youtube.com/watch?v=${youtubeId.videoId}`
+              : youtubeId.kind === "youtube#playlist"
+              ? `https://www.youtube.com/playlist?list=${youtubeId.playlistId}`
+              : "";
           return (
-            <ul className="tab_content one" key={id}>
+            <ul className="tab_content two" key={id}>
               <li>
                 <img
                   className="profileImg"
@@ -34,10 +41,39 @@ const TabContent = ({ mapGit, tab }) => {
                   src={elem.snippet.thumbnails.default.url}
                   alt={elem.snippet.title}
                 />
-                <h2>{elem.snippet.title}</h2>
+                <p>
+                  <a href={videoUrl} target="_blank" rel="noopener noreferrer">
+                    <h2>{elem.snippet.title}</h2>
+                  </a>
+                  <p>{elem.snippet.description}</p>{" "}
+                </p>
               </li>
+              {/* <li>
+              </li> */}
+            </ul>
+          );
+        } else {
+          return (
+            <ul className="tab_content three" key={id}>
               <li>
-                <p>{elem.snippet.description}</p>
+                <img
+                  className="profileImg"
+                  style={{ width: "120px", height: "90px" }}
+                  src={elem.pagemap.cse_thumbnail.src}
+                  alt={elem.title}
+                />
+                <p>
+                  <h2>
+                    <a
+                      href={elem.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {elem.title}
+                    </a>
+                  </h2>
+                  <p>{elem.snippet}</p>{" "}
+                </p>
               </li>
             </ul>
           );

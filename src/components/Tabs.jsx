@@ -12,7 +12,7 @@ const Tabs = ({ onhandletab, tab, noRes }) => {
         >
           <p>
             <img src={git} />
-            Github Repos <span>{noRes}</span>{" "}
+            Github Repos <span>{noRes[0]}</span>{" "}
           </p>
         </li>
         <li
@@ -21,7 +21,7 @@ const Tabs = ({ onhandletab, tab, noRes }) => {
         >
           <p>
             <img src={ytube} />
-            Youtube Videos
+            Youtube Videos<span>{noRes[1]}</span>
           </p>
         </li>
         <li
@@ -30,7 +30,7 @@ const Tabs = ({ onhandletab, tab, noRes }) => {
         >
           <p>
             <img src={gs} />
-            Google Search Results
+            Google Search Results<span>{noRes[2]}</span>
           </p>
         </li>
       </ul>

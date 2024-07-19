@@ -11,7 +11,8 @@ const ResultPage = () => {
 
   const [resSearch, setResearch] = useState(location.state?.query || ""); // Get query from state
   const [gitApi, setGitapi] = useState([]);
-  const [youApi, setYouapi] = useState({});
+  const [youApi, setYouapi] = useState([]);
+  const [gogApi, setgogapi] = useState([]);
   const [error, setError] = useState(null);
   const [loader, setLoader] = useState(false);
   const maxResults = 10;
@@ -35,7 +36,7 @@ const ResultPage = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       setGitapi(data.items);
     } catch (error) {
       console.error("Error fetching data", error);
@@ -57,7 +58,7 @@ const ResultPage = () => {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       setYouapi(data.items);
     } catch (error) {
       console.error("Error fetching data", error);
@@ -66,17 +67,11 @@ const ResultPage = () => {
   };
 
   const gogApiFunc = async () => {
-    const token = import.meta.env.VITE_GITHUB_TOKEN;
+    // const token = import.meta.env.VITE_GITHUB_TOKEN;
 
     try {
       const response = await fetch(
-        `https://api.github.com/search/repositories?q=${resSearch}&per_page=${maxResults}`,
-        {
-          headers: {
-            Authorization: `token ${token}`,
-            Accept: "application/vnd.github.mercy-preview+json", // Required for topics API
-          },
-        }
+        `https://www.googleapis.com/customsearch/v1?key=AIzaSyDNwmU4UnNXXiC64vp-4BkpJuP2I06Qz9Q&cx=93799fe76d7f54814&q=${resSearch}`
       );
 
       if (!response.ok) {
@@ -84,7 +79,7 @@ const ResultPage = () => {
       }
       const data = await response.json();
       console.log(data);
-      setGitapi(data.items);
+      setgogapi(data.items);
     } catch (error) {
       console.error("Error fetching data", error);
       setError(error.message);
@@ -95,6 +90,7 @@ const ResultPage = () => {
     if (resSearch) {
       gitApiFunc();
       youApiFunc();
+      gogApiFunc();
     }
   }, [resSearch, tab]);
 
@@ -116,7 +112,14 @@ const ResultPage = () => {
     }
   };
 
-  const totalitems = gitApi.length;
+  // const totalitems =
+  //   tab === "github"
+  //     ? gitApi.length
+  //     : tab === "youtube"
+  //     ? youApi.length
+  //     : gogApi.length;
+  const totalitems = [gitApi.length, youApi.length, gogApi.length];
+  // tab === "github" || tab === "youtube" ? gitApi.length : youApi.length;
 
   return (
     <>
@@ -145,7 +148,7 @@ const ResultPage = () => {
                 <>{<TabContent mapGit={youApi} tab={tab} />}</>
               )}
               {tab === "google" && (
-                <>{<TabContent mapGit={gitApi} tab={tab} />}</>
+                <>{<TabContent mapGit={gogApi} tab={tab} />}</>
               )}
             </div>
           )}
