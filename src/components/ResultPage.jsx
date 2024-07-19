@@ -8,15 +8,10 @@ import Loader from "./Loader";
 const ResultPage = () => {
   const [tab, setTab] = useState("github");
   const location = useLocation();
-  // const retriveUrl = () => {
-  //   return new URLSearchParams(location.state?.query);
-  // };
 
-  // const queries = retriveUrl();
-
-  // const searchQuery = queries.get("query");
   const [resSearch, setResearch] = useState(location.state?.query || ""); // Get query from state
   const [gitApi, setGitapi] = useState([]);
+  const [youApi, setYouapi] = useState({});
   const [error, setError] = useState(null);
   const [loader, setLoader] = useState(false);
   const maxResults = 10;
@@ -51,17 +46,11 @@ const ResultPage = () => {
   };
 
   const youApiFunc = async () => {
-    const token = import.meta.env.VITE_GITHUB_TOKEN;
+    const apiKey = "AIzaSyCahw31RJVcj1d8xd3DG9pwZfIzF2K9838";
 
     try {
       const response = await fetch(
-        `https://api.github.com/search/repositories?q=${resSearch}&per_page=${maxResults}`,
-        {
-          headers: {
-            Authorization: `token ${token}`,
-            Accept: "application/vnd.github.mercy-preview+json", // Required for topics API
-          },
-        }
+        `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${resSearch}&key=${apiKey}`
       );
 
       if (!response.ok) {
@@ -69,7 +58,7 @@ const ResultPage = () => {
       }
       const data = await response.json();
       console.log(data);
-      setGitapi(data.items);
+      setYouapi(data.items);
     } catch (error) {
       console.error("Error fetching data", error);
       setError(error.message);
@@ -105,6 +94,7 @@ const ResultPage = () => {
   useEffect(() => {
     if (resSearch) {
       gitApiFunc();
+      youApiFunc();
     }
   }, [resSearch, tab]);
 
@@ -147,10 +137,16 @@ const ResultPage = () => {
               {loader ? (
                 <Loader />
               ) : (
-                tab === "github" && <>{<TabContent mapGit={gitApi} />}</>
+                tab === "github" && (
+                  <>{<TabContent mapGit={gitApi} tab={tab} />}</>
+                )
               )}
-              {tab === "youtube" && <>{<TabContent mapGit={gitApi} />}</>}
-              {tab === "google" && <>{<TabContent mapGit={gitApi} />}</>}
+              {tab === "youtube" && (
+                <>{<TabContent mapGit={youApi} tab={tab} />}</>
+              )}
+              {tab === "google" && (
+                <>{<TabContent mapGit={gitApi} tab={tab} />}</>
+              )}
             </div>
           )}
         </div>

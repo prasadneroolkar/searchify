@@ -7,7 +7,7 @@ const Tabs = ({ onhandletab, tab, noRes }) => {
     <>
       <ul className="tabName">
         <li
-          className={tab === "github" && "active"}
+          className={tab === "github" ? "active" : undefined}
           onClick={() => onhandletab("github")}
         >
           <p>
@@ -16,7 +16,7 @@ const Tabs = ({ onhandletab, tab, noRes }) => {
           </p>
         </li>
         <li
-          className={tab === "youtube" && "active"}
+          className={tab === "youtube" ? "active" : undefined}
           onClick={() => onhandletab("youtube")}
         >
           <p>
@@ -25,7 +25,7 @@ const Tabs = ({ onhandletab, tab, noRes }) => {
           </p>
         </li>
         <li
-          className={tab === "google" && "active"}
+          className={tab === "google" ? "active" : undefined}
           onClick={() => onhandletab("google")}
         >
           <p>
