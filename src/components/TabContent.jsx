@@ -56,12 +56,12 @@ const TabContent = ({ mapGit, tab }) => {
           return (
             <ul className="tab_content three" key={id}>
               <li>
-                <img
+                {/* <img
                   className="profileImg"
                   style={{ width: "120px", height: "90px" }}
                   src={elem.pagemap.cse_thumbnail.src}
                   alt={elem.title}
-                />
+                /> */}
                 <p>
                   <h2>
                     <a

@@ -47,7 +47,7 @@ const ResultPage = () => {
   };
 
   const youApiFunc = async () => {
-    const apiKey = "AIzaSyCahw31RJVcj1d8xd3DG9pwZfIzF2K9838";
+    const apiKey = import.meta.env.VITE_YOUTUBE_API_KEY;
 
     try {
       const response = await fetch(
@@ -67,11 +67,12 @@ const ResultPage = () => {
   };
 
   const gogApiFunc = async () => {
-    // const token = import.meta.env.VITE_GITHUB_TOKEN;
+    const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+    const cx = import.meta.env.VITE_GOOGLE_CX;
 
     try {
       const response = await fetch(
-        `https://www.googleapis.com/customsearch/v1?key=AIzaSyDNwmU4UnNXXiC64vp-4BkpJuP2I06Qz9Q&cx=93799fe76d7f54814&q=${resSearch}`
+        `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${resSearch}`
       );
 
       if (!response.ok) {
