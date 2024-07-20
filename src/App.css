@@ -11,7 +11,7 @@ body {
 }
 .search_result {
   text-align: center;
-  margin-bottom: 40px;
+  margin-bottom: 26px;
 }
 
 .search_result h1 {
@@ -177,4 +177,19 @@ ul.tab_content.two li p a {
   justify-content: center;
   align-items: center;
   column-gap: 21px;
+}
+
+p.error {
+  text-align: center;
+  width: 100%;
+  color: #cc0033;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  line-height: 20px;
+  text-shadow: 1px 1px rgba(250, 250, 250, 0.3);
+  background-color: #fce4e4;
+  border: 1px solid #fcc2c3;
+  float: left;
+  padding: 20px 30px;
 }

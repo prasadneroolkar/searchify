@@ -17,7 +17,7 @@ const ResultPage = () => {
   const [youError, setYouError] = useState(null);
   const [gogError, setGogError] = useState(null);
   const [loader, setLoader] = useState(false);
-  const maxResults = 10;
+  // const maxResults = 10;
 
   const gitApiFunc = async () => {
     const token = import.meta.env.VITE_GITHUB_TOKEN;
@@ -36,7 +36,7 @@ const ResultPage = () => {
       );
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`Please wait a few minutes before you try again`);
       }
       const data = await response.json();
       // console.log(data);
@@ -60,7 +60,8 @@ const ResultPage = () => {
       );
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        // throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`Please wait a few minutes before you try again`);
       }
       const data = await response.json();
       // console.log(data);
@@ -85,7 +86,7 @@ const ResultPage = () => {
       );
 
       if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`);
+        throw new Error(`Please wait a few minutes before you try again`);
       }
       const data = await response.json();
       console.log(data);
@@ -147,7 +148,7 @@ const ResultPage = () => {
               ) : (
                 tab === "github" &&
                 (gitError ? (
-                  <p>Error: {gitError}</p>
+                  <p className="error">{gitError}</p>
                 ) : (
                   <>{<TabContent mapGit={gitApi} tab={tab} />}</>
                 ))
@@ -157,7 +158,7 @@ const ResultPage = () => {
               ) : (
                 tab === "youtube" &&
                 (youError ? (
-                  <p>Error: {youError}</p>
+                  <p className="error"> {youError}</p>
                 ) : (
                   <>{<TabContent mapGit={youApi} tab={tab} />}</>
                 ))
@@ -167,7 +168,7 @@ const ResultPage = () => {
               ) : (
                 tab === "google" &&
                 (gogError ? (
-                  <p>Error: {gogError}</p>
+                  <p className="error">{gogError}</p>
                 ) : (
                   <>{<TabContent mapGit={gogApi} tab={tab} />}</>
                 ))

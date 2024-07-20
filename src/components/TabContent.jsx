@@ -48,32 +48,18 @@ const TabContent = ({ mapGit, tab }) => {
                   <p>{elem.snippet.description}</p>{" "}
                 </p>
               </li>
-              {/* <li>
-              </li> */}
             </ul>
           );
         } else {
           return (
             <ul className="tab_content three" key={id}>
               <li>
-                {/* <img
-                  className="profileImg"
-                  style={{ width: "120px", height: "90px" }}
-                  src={elem.pagemap?.cse_thumbnail?.[0]?.src}
-                  alt={elem.title}
-                /> */}
-                <p>
-                  <h2>
-                    <a
-                      href={elem.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {elem.title}
-                    </a>
-                  </h2>
-                  <p>{elem.snippet}</p>{" "}
-                </p>
+                <h2>
+                  <a href={elem.link} target="_blank" rel="noopener noreferrer">
+                    {elem.title}
+                  </a>
+                </h2>
+                <p>{elem.snippet}</p>
               </li>
             </ul>
           );
