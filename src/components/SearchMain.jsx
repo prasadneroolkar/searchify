@@ -27,9 +27,9 @@ const SearchMain = () => {
             specific query at once on multiple platform mentioned below.
           </p>
           <div className="icons">
-            <img src="./youtube.png" alt="Youtube" />
             <img src="/github.png" alt="github" />
-            <img src="/stack-overflow.png" alt="stackoverflow" />
+            <img src="./youtube.png" alt="Youtube" />
+
             <img src="/google.png" alt="google" />
           </div>
         </div>

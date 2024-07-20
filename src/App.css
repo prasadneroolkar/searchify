@@ -65,7 +65,7 @@ input:focus-visible {
 }
 
 .icons img {
-  width: 90px;
+  width: 60px;
   height: auto;
 }
 
@@ -143,4 +143,38 @@ ul.tab_content.two li p a {
 }
 .content a {
   text-decoration: none;
+}
+
+.search_box {
+  row-gap: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 26px;
+}
+
+.searched_items p {
+  text-align: center;
+  max-width: 500px;
+  margin: 0 auto;
+  padding-bottom: 40px;
+}
+.searched_items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  background-color: #ffffff;
+  margin-top: 40px;
+  padding: 50px;
+  width: 60%;
+  margin: 0 auto;
+}
+
+.icons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  column-gap: 21px;
 }
