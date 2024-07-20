@@ -13,7 +13,9 @@ const ResultPage = () => {
   const [gitApi, setGitapi] = useState([]);
   const [youApi, setYouapi] = useState([]);
   const [gogApi, setgogapi] = useState([]);
-  const [error, setError] = useState(null);
+  const [gitError, setGitError] = useState(null);
+  const [youError, setYouError] = useState(null);
+  const [gogError, setGogError] = useState(null);
   const [loader, setLoader] = useState(false);
   const maxResults = 10;
 
@@ -22,6 +24,7 @@ const ResultPage = () => {
 
     try {
       setLoader(true);
+
       const response = await fetch(
         `https://api.github.com/search/repositories?q=${resSearch}`,
         {
@@ -40,7 +43,7 @@ const ResultPage = () => {
       setGitapi(data.items);
     } catch (error) {
       console.error("Error fetching data", error);
-      setError(error.message);
+      setGitError(error.message);
     } finally {
       setLoader(false);
     }
@@ -50,6 +53,8 @@ const ResultPage = () => {
     const apiKey = import.meta.env.VITE_YOUTUBE_API_KEY;
 
     try {
+      setLoader(true);
+
       const response = await fetch(
         `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${resSearch}&key=${apiKey}`
       );
@@ -62,7 +67,9 @@ const ResultPage = () => {
       setYouapi(data.items);
     } catch (error) {
       console.error("Error fetching data", error);
-      setError(error.message);
+      setYouError(error.message);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -71,6 +78,8 @@ const ResultPage = () => {
     const cx = import.meta.env.VITE_GOOGLE_CX;
 
     try {
+      setLoader(true);
+
       const response = await fetch(
         `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${resSearch}`
       );
@@ -83,7 +92,9 @@ const ResultPage = () => {
       setgogapi(data.items);
     } catch (error) {
       console.error("Error fetching data", error);
-      setError(error.message);
+      setGogError(error.message);
+    } finally {
+      setLoader(false);
     }
   };
 
@@ -113,14 +124,7 @@ const ResultPage = () => {
     }
   };
 
-  // const totalitems =
-  //   tab === "github"
-  //     ? gitApi.length
-  //     : tab === "youtube"
-  //     ? youApi.length
-  //     : gogApi.length;
   const totalitems = [gitApi.length, youApi.length, gogApi.length];
-  // tab === "github" || tab === "youtube" ? gitApi.length : youApi.length;
 
   return (
     <>
@@ -135,21 +139,38 @@ const ResultPage = () => {
         </div>
         <div className="tab">
           <Tabs onhandletab={handleTab} tab={tab} noRes={totalitems} />
-          {error && <p>Error: {error}</p>}
+
           {gitApi.length > 0 && (
             <div className="content">
-              {loader ? (
+              {tab === "github" && loader ? (
                 <Loader />
               ) : (
-                tab === "github" && (
+                tab === "github" &&
+                (gitError ? (
+                  <p>Error: {gitError}</p>
+                ) : (
                   <>{<TabContent mapGit={gitApi} tab={tab} />}</>
-                )
+                ))
               )}
-              {tab === "youtube" && (
-                <>{<TabContent mapGit={youApi} tab={tab} />}</>
+              {tab === "youtube" && loader ? (
+                <Loader />
+              ) : (
+                tab === "youtube" &&
+                (youError ? (
+                  <p>Error: {youError}</p>
+                ) : (
+                  <>{<TabContent mapGit={youApi} tab={tab} />}</>
+                ))
               )}
-              {tab === "google" && (
-                <>{<TabContent mapGit={gogApi} tab={tab} />}</>
+              {tab === "google" && loader ? (
+                <Loader />
+              ) : (
+                tab === "google" &&
+                (gogError ? (
+                  <p>Error: {gogError}</p>
+                ) : (
+                  <>{<TabContent mapGit={gogApi} tab={tab} />}</>
+                ))
               )}
             </div>
           )}

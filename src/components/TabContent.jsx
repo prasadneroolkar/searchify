@@ -59,7 +59,7 @@ const TabContent = ({ mapGit, tab }) => {
                 {/* <img
                   className="profileImg"
                   style={{ width: "120px", height: "90px" }}
-                  src={elem.pagemap.cse_thumbnail.src}
+                  src={elem.pagemap?.cse_thumbnail?.[0]?.src}
                   alt={elem.title}
                 /> */}
                 <p>
