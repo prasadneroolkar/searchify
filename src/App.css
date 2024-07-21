@@ -193,3 +193,50 @@ p.error {
   float: left;
   padding: 20px 30px;
 }
+
+@media screen and (max-width: 768px) {
+  input {
+    width: 360px;
+    max-width: 768px;
+  }
+  .tab {
+    width: 90%;
+    /* margin: 0 auto; */
+  }
+  h2 {
+    word-break: break-word;
+  }
+
+  ul.tabName {
+    padding: 5px;
+  }
+
+  .searched_items {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  input {
+    width: 100%;
+    max-width: unset;
+  }
+  .tab {
+    width: 100%;
+    margin: 0 auto;
+  }
+  ul.tabName li p {
+    font-size: 14px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  input {
+    width: 100%;
+    max-width: unset;
+  }
+  .tab {
+    width: 100%;
+    margin: 0 auto;
+  }
+}

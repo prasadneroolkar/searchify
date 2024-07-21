@@ -41,12 +41,12 @@ const TabContent = ({ mapGit, tab }) => {
                   src={elem.snippet.thumbnails.default.url}
                   alt={elem.snippet.title}
                 />
-                <p>
+                <div>
                   <a href={videoUrl} target="_blank" rel="noopener noreferrer">
                     <h2>{elem.snippet.title}</h2>
                   </a>
                   <p>{elem.snippet.description}</p>{" "}
-                </p>
+                </div>
               </li>
             </ul>
           );
@@ -54,12 +54,18 @@ const TabContent = ({ mapGit, tab }) => {
           return (
             <ul className="tab_content three" key={id}>
               <li>
-                <h2>
-                  <a href={elem.link} target="_blank" rel="noopener noreferrer">
-                    {elem.title}
-                  </a>
-                </h2>
-                <p>{elem.snippet}</p>
+                <div>
+                  <h2>
+                    <a
+                      href={elem.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      {elem.title}
+                    </a>
+                  </h2>
+                  <p>{elem.snippet}</p>
+                </div>
               </li>
             </ul>
           );

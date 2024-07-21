@@ -4,6 +4,11 @@ import InputComp from "./InputComp";
 import Tabs from "./Tabs";
 import TabContent from "./TabContent";
 import Loader from "./Loader";
+import {
+  fetchGitHubResults,
+  fetchYouTubeResults,
+  fetchGoogleResults,
+} from "../api";
 
 const ResultPage = () => {
   const [tab, setTab] = useState("github");
@@ -19,91 +24,121 @@ const ResultPage = () => {
   const [loader, setLoader] = useState(false);
   // const maxResults = 10;
 
-  const gitApiFunc = async () => {
-    const token = import.meta.env.VITE_GITHUB_TOKEN;
+  // const gitApiFunc = async () => {
+  //   const token = import.meta.env.VITE_GITHUB_TOKEN;
+
+  //   try {
+  //     setLoader(true);
+
+  //     const response = await fetch(
+  //       `https://api.github.com/search/repositories?q=${resSearch}`,
+  //       {
+  //         headers: {
+  //           Authorization: `token ${token}`,
+  //           Accept: "application/vnd.github.mercy-preview+json", // Required for topics API
+  //         },
+  //       }
+  //     );
+
+  //     if (!response.ok) {
+  //       throw new Error(`Please wait a few minutes before you try again`);
+  //     }
+  //     const data = await response.json();
+  //     // console.log(data);
+  //     setGitapi(data.items);
+  //   } catch (error) {
+  //     console.error("Error fetching data", error);
+  //     setGitError(error.message);
+  //   } finally {
+  //     setLoader(false);
+  //   }
+  // };
+
+  // const youApiFunc = async () => {
+  //   const apiKey = import.meta.env.VITE_YOUTUBE_API_KEY;
+
+  //   try {
+  //     setLoader(true);
+
+  //     const response = await fetch(
+  //       `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${resSearch}&key=${apiKey}`
+  //     );
+
+  //     if (!response.ok) {
+  //       // throw new Error(`HTTP error! status: ${response.status}`);
+  //       throw new Error(`Please wait a few minutes before you try again`);
+  //     }
+  //     const data = await response.json();
+  //     // console.log(data);
+  //     setYouapi(data.items);
+  //   } catch (error) {
+  //     console.error("Error fetching data", error);
+  //     setYouError(error.message);
+  //   } finally {
+  //     setLoader(false);
+  //   }
+  // };
+
+  // const gogApiFunc = async () => {
+  //   const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
+  //   const cx = import.meta.env.VITE_GOOGLE_CX;
+
+  //   try {
+  //     setLoader(true);
+
+  //     const response = await fetch(
+  //       `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${resSearch}`
+  //     );
+
+  //     if (!response.ok) {
+  //       throw new Error(`Please wait a few minutes before you try again`);
+  //     }
+  //     const data = await response.json();
+  //     console.log(data);
+  //     setgogapi(data.items);
+  //   } catch (error) {
+  //     console.error("Error fetching data", error);
+  //     setGogError(error.message);
+  //   } finally {
+  //     setLoader(false);
+  //   }
+  // };
+  const fetchData = async () => {
+    if (!resSearch.trim()) {
+      return;
+    }
+    setLoader(true);
+    try {
+      let gitData = await fetchGitHubResults(resSearch);
+      console.log(gitData);
+      setGitapi(gitData);
+    } catch (error) {
+      console.error("GitHub API error", error);
+
+      setGitError(error.gitError);
+    }
 
     try {
-      setLoader(true);
-
-      const response = await fetch(
-        `https://api.github.com/search/repositories?q=${resSearch}`,
-        {
-          headers: {
-            Authorization: `token ${token}`,
-            Accept: "application/vnd.github.mercy-preview+json", // Required for topics API
-          },
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`Please wait a few minutes before you try again`);
-      }
-      const data = await response.json();
-      // console.log(data);
-      setGitapi(data.items);
+      let youApi = await fetchYouTubeResults(resSearch);
+      setYouapi(youApi);
     } catch (error) {
-      console.error("Error fetching data", error);
-      setGitError(error.message);
-    } finally {
-      setLoader(false);
+      console.error("YouTube API error", error);
+      setYouError(error.youError);
     }
-  };
-
-  const youApiFunc = async () => {
-    const apiKey = import.meta.env.VITE_YOUTUBE_API_KEY;
 
     try {
-      setLoader(true);
-
-      const response = await fetch(
-        `https://www.googleapis.com/youtube/v3/search?part=snippet&q=${resSearch}&key=${apiKey}`
-      );
-
-      if (!response.ok) {
-        // throw new Error(`HTTP error! status: ${response.status}`);
-        throw new Error(`Please wait a few minutes before you try again`);
-      }
-      const data = await response.json();
-      // console.log(data);
-      setYouapi(data.items);
+      let gogData = await fetchGoogleResults(resSearch);
+      setgogapi(gogData);
     } catch (error) {
-      console.error("Error fetching data", error);
-      setYouError(error.message);
-    } finally {
-      setLoader(false);
+      console.error("Google API error", error);
+      setGogError(error.gogError);
     }
-  };
-
-  const gogApiFunc = async () => {
-    const apiKey = import.meta.env.VITE_GOOGLE_API_KEY;
-    const cx = import.meta.env.VITE_GOOGLE_CX;
-
-    try {
-      setLoader(true);
-
-      const response = await fetch(
-        `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${resSearch}`
-      );
-
-      if (!response.ok) {
-        throw new Error(`Please wait a few minutes before you try again`);
-      }
-      const data = await response.json();
-      console.log(data);
-      setgogapi(data.items);
-    } catch (error) {
-      console.error("Error fetching data", error);
-      setGogError(error.message);
-    } finally {
-      setLoader(false);
-    }
+    setLoader(false);
   };
 
   useEffect(() => {
     if (resSearch) {
-      gitApiFunc();
-      youApiFunc();
-      gogApiFunc();
+      fetchData();
     }
   }, [resSearch, tab]);
 
@@ -120,7 +155,8 @@ const ResultPage = () => {
       e.preventDefault();
       const query = e.target.value.trim();
       if (query) {
-        setResearch(query); // Update search query
+        setResearch(query);
+        // Update search query
       }
     }
   };
