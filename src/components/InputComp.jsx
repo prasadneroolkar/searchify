@@ -4,8 +4,8 @@ const InputComp = ({ handleStore, refProp, value, onChange }) => {
     <>
       <h1>Searchify</h1>
       <div className="search_box">
-        <span>
-          <span>
+        <span className="searchContent">
+          <span className="searchImg">
             <img src={search} alt="searchicon" />
           </span>
           <input
