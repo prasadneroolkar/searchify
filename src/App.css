@@ -22,10 +22,11 @@ h2 {
   font-size: 16px;
   font-weight: 500;
 }
-
-.search_result img {
-  width: 20px;
-  height: 20px;
+@media screen and (max-width: 768px) {
+  .search_result img {
+    width: 20px;
+    height: 20px;
+  }
 }
 
 .search_box span {
@@ -33,14 +34,21 @@ h2 {
   text-align: center;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   column-gap: 10px;
 }
 
-.search_box > span {
+.search_box .searchContent {
   border-radius: 25px;
   border: 1px solid #cccccc;
   padding-inline: 20px;
+  width: 40%;
+}
+
+@media screen and (max-width: 768px) {
+  .search_box .searchContent {
+    width: 100%;
+  }
 }
 
 .container {
@@ -62,6 +70,11 @@ input {
 
 input:focus-visible {
   outline: none;
+}
+
+span.searchImg img {
+  width: 20px;
+  height: auto;
 }
 
 .icons img {
@@ -152,6 +165,7 @@ ul.tab_content.two li p a {
   align-items: center;
   flex-direction: column;
   margin-bottom: 26px;
+  width: 90%;
 }
 
 .searched_items p {
